@@ -4,6 +4,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         Title="GraphWindow" Height="500" Width="700"
         WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Images/favicon.ico"
         Background="#244c3c">
     <Window.Resources>
         <Style TargetType="Button">

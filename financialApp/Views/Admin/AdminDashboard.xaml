@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Admin Dashboard" Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Images/favicon.ico"
         Background="#244C3C">
     <Grid>
         <Border Background="Transparent" 

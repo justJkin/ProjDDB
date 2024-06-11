@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="FinancialApp" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Images/favicon.ico"
         Background="#244c3c">
     <Grid>
         <Border Background="Transparent" 

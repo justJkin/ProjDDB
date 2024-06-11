@@ -118,7 +118,13 @@
                             Width="400"
                             Height="300"
                             Background="#e7e7d0"
-                            BorderThickness="0"/>
+                            BorderThickness="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Border>
                 </Grid>
             </StackPanel>

@@ -1,0 +1,83 @@
+CREATE TABLE Items (
+    ItemID INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(MAX) NOT NULL,
+    Price DECIMAL(18,2) NOT NULL
+);
+
+CREATE TABLE UserGroups (
+    GroupID INT IDENTITY(1,1) PRIMARY KEY,
+    GroupName NVARCHAR(MAX) NOT NULL
+);
+
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(MAX) NOT NULL,
+    Password NVARCHAR(MAX) NOT NULL,
+    Email NVARCHAR(MAX) NOT NULL,
+    Role NVARCHAR(MAX) NOT NULL
+);
+
+CREATE TABLE PeriodicReports (
+    ReportID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    ReportType NVARCHAR(MAX) NOT NULL,
+    DateFrom DATETIME2 NOT NULL,
+    DateTo DATETIME2 NOT NULL,
+    ReportData NVARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE Reminders (
+    ReminderID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    ExpenseID INT NOT NULL,
+    Frequency NVARCHAR(MAX) NOT NULL,
+    NextReminderDate DATETIME2 NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE SavingGoals (
+    GoalID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    Amount DECIMAL(18,2) NOT NULL,
+    GoalType NVARCHAR(MAX) NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE Transactions (
+    TransactionID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    EntityID INT NOT NULL,
+    Amount DECIMAL(18,2) NOT NULL,
+    Date DATETIME2 NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    CategoryID INT NOT NULL,
+    CategoryName NVARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE UserGroupMemberships (
+    UserID INT NOT NULL,
+    GroupID INT NOT NULL,
+    PRIMARY KEY (UserID, GroupID),
+    FOREIGN KEY (GroupID) REFERENCES UserGroups(GroupID) ON DELETE RESTRICT,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE RESTRICT
+);
+
+CREATE TABLE Labels (
+    LabelID INT IDENTITY(1,1) PRIMARY KEY,
+    LabelName NVARCHAR(MAX) NOT NULL,
+    EntityType NVARCHAR(MAX) NOT NULL,
+    EntityID INT NOT NULL,
+    FOREIGN KEY (EntityID) REFERENCES Transactions(TransactionID) ON DELETE CASCADE
+);
+
+CREATE INDEX IX_Labels_EntityID ON Labels(EntityID);
+CREATE INDEX IX_PeriodicReports_UserID ON PeriodicReports(UserID);
+CREATE INDEX IX_Reminders_UserID ON Reminders(UserID);
+CREATE INDEX IX_SavingGoals_UserID ON SavingGoals(UserID);
+CREATE UNIQUE INDEX IX_Transactions_EntityID ON Transactions(EntityID);
+CREATE INDEX IX_Transactions_UserID ON Transactions(UserID);
+CREATE INDEX IX_UserGroupMemberships_GroupID ON UserGroupMemberships(GroupID);

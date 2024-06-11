@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 public interface IUserService
-{
+{ 
+    //nig
     IEnumerable<User> GetAllUsers();
     User GetUserById(int id);
     void CreateUser(User user);
